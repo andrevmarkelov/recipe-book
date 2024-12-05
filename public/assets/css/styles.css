@@ -1,0 +1,5 @@
+@import 'bootstrap.min.css';
+
+#content {
+    min-height: 92vh;
+}
