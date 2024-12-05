@@ -1,5 +1,174 @@
+/* Импорты */
 @import 'bootstrap.min.css';
 
+/* Переменные */
+:root {
+    --white: #ffffff;
+    --sunshine: #fcdb5a;
+    --gray-medium: #666666;
+    --gray-dark: #333333;
+}
+
+/* Базовые */
+a {
+    text-decoration: none;
+    display: inline-block;
+}
+
 #content {
-    min-height: 92vh;
+    min-height: 88vh;
+}
+
+.btn-default {
+    border-radius: 20px;
+    font-weight: 700;
+    padding: 10px 25px;
+    font-size: 13px;
+    color: var(--gray-dark);
+    border: 2px solid var(--sunshine);
+    text-transform: uppercase;
+    transition: 0.3s all;
+}
+
+.btn-default:hover {
+    background-color: var(--sunshine);
+}
+
+/* Шапка */
+.header-logo img {
+    width: 200px;
+    height: auto;
+}
+
+.header-nav a {
+    position: relative;
+    color: var(--gray-medium);
+}
+
+.header-nav a:after {
+    position: absolute;
+    display: block;
+    content: '';
+    width: 0;
+    height: 2px;
+    background-color: var(--sunshine);
+    transition: 0.3s all;
+}
+
+.header-nav a:hover:after {
+    width: 100%;
+}
+
+.btn-header {
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 25px;
+    border-radius: 20px;
+    color: var(--gray-dark);
+    text-transform: uppercase;
+    border: 2px solid var(--sunshine);
+    background-color: var(--sunshine);
+    transition: 0.3s all;
+}
+
+.btn-header:hover {
+    background-color: var(--white);
+}
+
+/* Вступление */
+.intro {
+    background-image: url('../images/intro.jpg');
+    background-position: center center;
+    background-size: cover;
+}
+
+.intro-title {
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--gray-dark);
+}
+
+.intro-subtitle {
+    color: var(--gray-dark);
+}
+
+/* Список рецептов */
+.recipe-list__title {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--gray-dark);
+}
+
+.recipe-item {
+    border: 1px solid #e5e5e5;
+    height: 100%;
+    transition: box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), -webkit-box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.recipe-item:hover {
+    -webkit-box-shadow: 0 1px 18px 0 rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 18px 0 rgba(0, 0, 0, 0.15);
+}
+
+.recipe-item__image {
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    height: 180px;
+}
+
+.recipe-item__image img {
+    width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+    transition: 0.5s all;
+}
+
+.recipe-item:hover img {
+    transform: scale(1.1);
+}
+
+.recipe-item__title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--gray-dark);
+    transition: 0.3s all;
+}
+
+.recipe-item__title:hover {
+    color: var(--sunshine);
+}
+
+.recipe-item__instructions {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 48px;
+    color: var(--gray-medium);
+}
+
+/* Подвал */
+.footer {
+    color: var(--white);
+    background-color: var(--gray-dark);
+}
+
+.footer a {
+    color: var(--sunshine);
+    text-decoration: underline;
+}
+
+.footer a:hover {
+    text-decoration: none;
+}
+
+/* Адаптация */
+@media screen and (max-width: 500px) {
+    .header-content {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
 }
