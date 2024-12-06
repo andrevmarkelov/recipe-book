@@ -26,6 +26,7 @@ a {
     font-size: 13px;
     color: var(--gray-dark);
     border: 2px solid var(--sunshine);
+    background-color: transparent;
     text-transform: uppercase;
     transition: 0.3s all;
 }
@@ -147,6 +148,17 @@ a {
     overflow: hidden;
     height: 48px;
     color: var(--gray-medium);
+}
+
+/* Форма */
+.required-field {
+    font-weight: bold;
+    color: var(--sunshine);
+}
+
+.form-control:focus {
+    border-color: var(--sunshine);
+    box-shadow: 0 0 0 .25rem rgba(252, 219, 90, .5);
 }
 
 /* Подвал */
