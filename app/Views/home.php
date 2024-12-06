@@ -32,22 +32,26 @@ ob_start(); ?>
     </div>
 
     <div class="row">
-        <p class="text-center recipe-empty text-muted mt-5">Рецепты пока в пути! Скоро здесь появится много вкусного.</p>
+        <?php if (!empty($recipes)): ?>
+            <?php foreach ($recipes as $recipe): ?>
+                <div class="col-sm-6 col-lg-4 col-xl-3 mb-4">
+                    <div class="recipe-item">
+                        <a href="<?php echo htmlspecialchars($recipe['slug']); ?>" class="recipe-item__image">
+                            <img src="/public/assets/images/recipe-images/<?php echo htmlspecialchars($recipe['image_path']); ?>" alt="<?php echo htmlspecialchars($recipe['title']); ?>">
+                        </a>
 
-        <div class="col-sm-6 col-lg-4 col-xl-3 mb-4 d-none">
-            <div class="recipe-item">
-                <a href="#" class="recipe-item__image">
-                    <img src="#" alt="Заголовок">
-                </a>
+                        <div class="recipe-item__content p-4">
+                            <a href="<?php echo htmlspecialchars($recipe['slug']); ?>" class="h5 recipe-item__title" title="<?php echo htmlspecialchars($recipe['title']); ?>"><?php echo htmlspecialchars($recipe['title']); ?></a>
+                            <p class="recipe-item__instructions"><?php echo htmlspecialchars($recipe['instructions']); ?></p>
 
-                <div class="recipe-item__content p-4">
-                    <a href="#" class="h5 recipe-item__title" title="Заголовок">Заголовок</a>
-                    <p class="recipe-item__instructions">Инструкция</p>
-
-                    <a href="#" class="btn-default">Подробнее</a>
+                            <a href="<?php echo htmlspecialchars($recipe['slug']); ?>" class="btn-default">Подробнее</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <p class="text-center recipe-empty text-muted mt-5">Рецепты пока в пути! Скоро здесь появится много вкусного.</p>
+        <?php endif; ?>
     </div>
 </div>
 
