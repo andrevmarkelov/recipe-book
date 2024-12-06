@@ -161,6 +161,34 @@ a {
     box-shadow: 0 0 0 .25rem rgba(252, 219, 90, .5);
 }
 
+/* Страница рецепта */
+.recipe-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #e5e5e5;
+    overflow: hidden;
+}
+
+.recipe-image img {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+}
+
+.recipe-detail h1 {
+    color: var(--gray-dark);
+}
+
+.recipe-detail p {
+    color: var(--gray-medium);
+}
+
+.recipe-detail p strong {
+    color: var(--gray-dark);
+}
+
 /* Подвал */
 .footer {
     color: var(--white);
@@ -177,6 +205,13 @@ a {
 }
 
 /* Адаптация */
+@media screen and (max-width: 1200px) {
+    .recipe-image img {
+        width: 100%;
+        height: 100%;
+    }
+}
+
 @media screen and (max-width: 500px) {
     .header-content {
         flex-direction: column;
@@ -184,3 +219,4 @@ a {
         gap: 10px;
     }
 }
+

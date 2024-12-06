@@ -78,4 +78,23 @@ class RecipeController
         Recipe::store($_POST['title'], $_POST['slug'], $_POST['ingredients'], $_POST['instructions'], $fileName);
         echo json_encode(['status' => 'success', 'message' => 'Рецепт был успешно сохранён']);
     }
+
+    /**
+     * Отображаем страницу рецепта по слагу
+     *
+     * @param string $slug Уникальный slug рецепта
+     * @return void
+     */
+    public function show(string $slug): void
+    {
+        $recipe = Recipe::findBySlug($slug);
+
+        if (!$recipe) {
+            http_response_code(404);
+            include __DIR__ . '/../Views/errors/404.php';
+            return;
+        }
+
+        include __DIR__ . '/../Views/recipes/show.php';
+    }
 }
