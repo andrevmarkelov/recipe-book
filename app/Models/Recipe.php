@@ -6,6 +6,11 @@ use PDO;
 
 class Recipe
 {
+    /**
+     * Возвращаем список всех рецептов из базы данных
+     *
+     * @return false|array
+     */
     public static function index(): false|array
     {
         $db = self::getDB();
@@ -41,7 +46,24 @@ class Recipe
     }
 
     /**
-     * Получение подключения к базе данных
+     * Ищем рецепт в базе данных по слагу
+     *
+     * @param string $slug Уникальный slug рецепта
+     * @return array|null
+     */
+    public static function findBySlug(string $slug): ?array
+    {
+        $db = self::getDB();
+        $stmt = $db->prepare('SELECT * FROM recipes WHERE slug = :slug');
+        $stmt->execute([':slug' => $slug]);
+        $recipe = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $recipe ?: null;
+    }
+
+
+    /**
+     * Подключение к базе данных
      *
      * @return PDO
      */

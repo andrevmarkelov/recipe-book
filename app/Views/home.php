@@ -36,15 +36,15 @@ ob_start(); ?>
             <?php foreach ($recipes as $recipe): ?>
                 <div class="col-sm-6 col-lg-4 col-xl-3 mb-4">
                     <div class="recipe-item">
-                        <a href="<?php echo htmlspecialchars($recipe['slug']); ?>" class="recipe-item__image">
+                        <a href="/recipe/<?php echo htmlspecialchars($recipe['slug']); ?>" class="recipe-item__image">
                             <img src="/public/assets/images/recipe-images/<?php echo htmlspecialchars($recipe['image_path']); ?>" alt="<?php echo htmlspecialchars($recipe['title']); ?>">
                         </a>
 
                         <div class="recipe-item__content p-4">
-                            <a href="<?php echo htmlspecialchars($recipe['slug']); ?>" class="h5 recipe-item__title" title="<?php echo htmlspecialchars($recipe['title']); ?>"><?php echo htmlspecialchars($recipe['title']); ?></a>
+                            <a href="/recipe/<?php echo htmlspecialchars($recipe['slug']); ?>" class="h5 recipe-item__title" title="<?php echo htmlspecialchars($recipe['title']); ?>"><?php echo htmlspecialchars($recipe['title']); ?></a>
                             <p class="recipe-item__instructions"><?php echo htmlspecialchars($recipe['instructions']); ?></p>
 
-                            <a href="<?php echo htmlspecialchars($recipe['slug']); ?>" class="btn-default">Подробнее</a>
+                            <a href="/recipe/<?php echo htmlspecialchars($recipe['slug']); ?>" class="btn-default">Подробнее</a>
                         </div>
                     </div>
                 </div>
