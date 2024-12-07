@@ -1,4 +1,5 @@
 <?php $title = 'Редактировать рецепт';
+$scripts = ['edit-recipe.js'];
 ob_start(); ?>
 
 <div class="container pt-2 pb-5">
