@@ -62,6 +62,8 @@ class Recipe
     }
 
     /**
+     * Обновляем рецепт в базе данных
+     *
      * @param string $slug
      * @param string $title
      * @param string $ingredients
@@ -96,6 +98,8 @@ class Recipe
     }
 
     /**
+     * Удаляем рецепт по slug
+     *
      * @param string $slug
      * @return bool
      */
@@ -106,6 +110,28 @@ class Recipe
         $stmt->bindParam(':slug', $slug);
 
         return $stmt->execute();
+    }
+
+    /**
+     * Возвращаем рецепты с фильтрацией
+     *
+     * @param string $search
+     * @param string $sort
+     * @return false|array
+     */
+    public static function searchAndSort(string $search = '', string $sort = 'asc'): false|array
+    {
+        $db = self::getDB();
+
+        $query = "SELECT * FROM recipes 
+                WHERE title LIKE :search 
+                ORDER BY title " . ($sort === 'desc' ? 'DESC' : 'ASC');
+
+        $stmt = $db->prepare($query);
+        $stmt->bindValue(':search', '%' . $search . '%');
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     /**

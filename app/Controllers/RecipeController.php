@@ -71,7 +71,7 @@ class RecipeController
         $filePath = $uploadDir . $fileName;
 
         if (!move_uploaded_file($_FILES['image']['tmp_name'], $filePath)) {
-            echo json_encode(['status' => 'error', 'message' => 'Ошибка загрузки изображения.']);
+            echo json_encode(['status' => 'error', 'message' => 'Ошибка загрузки изображения']);
             return;
         }
 
@@ -99,6 +99,8 @@ class RecipeController
     }
 
     /**
+     * Отображаем страницу редактирования рецепта
+     *
      * @param string $slug
      * @return void
      */
@@ -116,6 +118,8 @@ class RecipeController
     }
 
     /**
+     * Обновляем рецепт по slug
+     *
      * @param string $slug
      * @return void
      */
@@ -125,7 +129,7 @@ class RecipeController
 
         if (!$recipe) {
             header('HTTP/1.1 404 Not Found');
-            echo json_encode(['status' => 'error', 'message' => 'Рецепт не найден.']);
+            echo json_encode(['status' => 'error', 'message' => 'Рецепт не найден']);
             return;
         }
 
@@ -150,7 +154,7 @@ class RecipeController
 
             if (!move_uploaded_file($_FILES['image']['tmp_name'], $filePath)) {
                 header('HTTP/1.1 500 Internal Server Error');
-                echo json_encode(['status' => 'error', 'message' => 'Ошибка загрузки изображения.']);
+                echo json_encode(['status' => 'error', 'message' => 'Ошибка загрузки изображения']);
                 return;
             }
 
@@ -163,11 +167,13 @@ class RecipeController
             echo json_encode(['status' => 'success', 'message' => 'Рецепт успешно обновлён']);
         } else {
             header('HTTP/1.1 500 Internal Server Error');
-            echo json_encode(['status' => 'error', 'message' => 'Не удалось обновить рецепт.']);
+            echo json_encode(['status' => 'error', 'message' => 'Не удалось обновить рецепт']);
         }
     }
 
     /**
+     * Удаляем рецепт и его изображение по slug
+     *
      * @param string $slug
      * @return void
      */
@@ -177,7 +183,7 @@ class RecipeController
 
         if (!$recipe) {
             header('HTTP/1.1 404 Not Found');
-            echo json_encode(['status' => 'error', 'message' => 'Рецепт не найден.']);
+            echo json_encode(['status' => 'error', 'message' => 'Рецепт не найден']);
             return;
         }
 
@@ -196,5 +202,23 @@ class RecipeController
             header('HTTP/1.1 500 Internal Server Error');
             echo json_encode(['status' => 'error', 'message' => 'Не удалось удалить рецепт']);
         }
+    }
+
+    /**
+     * Возвращаем список рецептов с поиском и сортировкой
+     *
+     * @return void
+     */
+    public function filter(): void
+    {
+        header('Content-Type: application/json');
+
+        $search = $_GET['search'] ?? '';
+        $sort = $_GET['sort'] ?? 'asc';
+
+        $recipes = Recipe::searchAndSort($search, $sort);
+
+        header('Content-Type: application/json');
+        echo json_encode(['status' => 'success', 'recipes' => $recipes]);
     }
 }
