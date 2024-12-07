@@ -95,6 +95,18 @@ class Recipe
         return $stmt->execute($params);
     }
 
+    /**
+     * @param string $slug
+     * @return bool
+     */
+    public static function deleteBySlug(string $slug): bool
+    {
+        $db = self::getDB();
+        $stmt = $db->prepare("DELETE FROM recipes WHERE slug = :slug");
+        $stmt->bindParam(':slug', $slug);
+
+        return $stmt->execute();
+    }
 
     /**
      * Подключение к базе данных
