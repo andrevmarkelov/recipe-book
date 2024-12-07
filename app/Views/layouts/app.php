@@ -24,6 +24,12 @@
 
     <!-- Скрипты -->
     <script src="/public/assets/js/bootstrap.bundle.min.js"></script>
-    <script src="/public/assets/js/scripts.js"></script>
+
+    <?php if (isset($scripts)) : ?>
+        <?php foreach ($scripts as $script) : ?>
+            <script src="/public/assets/js/<?php echo $script; ?>"></script>
+        <?php endforeach; ?>
+    <?php endif; ?>
+
 </body>
 </html>

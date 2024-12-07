@@ -1,4 +1,5 @@
 <?php $title = htmlspecialchars($recipe['title']);
+$scripts = ['delete-recipe.js'];
 ob_start(); ?>
 
 <div class="container pt-2 pb-5">

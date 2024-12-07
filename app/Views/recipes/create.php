@@ -1,7 +1,15 @@
 <?php $title = 'Добавить новый рецепт';
+$scripts = ['create-recipe.js'];
 ob_start(); ?>
 
-<div class="container py-5">
+<div class="container pt-2 pb-5">
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb" class="mb-5">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/" class="text-black">Главная</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Добавить новый рецепт</li>
+        </ol>
+    </nav>
+
     <div class="row justify-content-center">
         <div class="col-md-5">
             <h1 class="text-center h4 fw-bold mb-4 text-uppercase">Добавить рецепт</h1>

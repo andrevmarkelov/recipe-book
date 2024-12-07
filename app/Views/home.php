@@ -1,4 +1,5 @@
 <?php $title = 'Книга рецептов';
+$scripts = ['filter-recipes.js'];
 ob_start(); ?>
 
 <div class="intro">
