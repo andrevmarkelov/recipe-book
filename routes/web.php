@@ -29,4 +29,8 @@ return [
         $controller = new RecipeController();
         $controller->update($slug);
     },
+    '/recipe/{slug}/delete' => function ($slug) {
+        $controller = new RecipeController();
+        $controller->delete($slug);
+    },
 ];

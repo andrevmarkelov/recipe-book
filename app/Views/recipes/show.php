@@ -46,11 +46,15 @@ ob_start(); ?>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-dark" data-bs-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-outline-danger">Удалить</button>
+                <button type="button" id="deleteButton" class="btn btn-outline-danger">Удалить</button>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const recipeSlug = "<?php echo htmlspecialchars($recipe['slug']); ?>";
+</script>
 
 <?php $content = ob_get_clean();
 include __DIR__ . '/../layouts/app.php'; ?>

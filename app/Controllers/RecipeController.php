@@ -166,4 +166,35 @@ class RecipeController
             echo json_encode(['status' => 'error', 'message' => 'Не удалось обновить рецепт.']);
         }
     }
+
+    /**
+     * @param string $slug
+     * @return void
+     */
+    public function delete(string $slug): void
+    {
+        $recipe = Recipe::findBySlug($slug);
+
+        if (!$recipe) {
+            header('HTTP/1.1 404 Not Found');
+            echo json_encode(['status' => 'error', 'message' => 'Рецепт не найден.']);
+            return;
+        }
+
+        $uploadDir = __DIR__ . '/../../public/assets/images/recipe-images/';
+        $imagePath = $uploadDir . $recipe['image_path'];
+
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+        $deleted = Recipe::deleteBySlug($slug);
+
+        if ($deleted) {
+            echo json_encode(['status' => 'success', 'message' => 'Рецепт успешно удалён']);
+        } else {
+            header('HTTP/1.1 500 Internal Server Error');
+            echo json_encode(['status' => 'error', 'message' => 'Не удалось удалить рецепт']);
+        }
+    }
 }
