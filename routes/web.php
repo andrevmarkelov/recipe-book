@@ -21,4 +21,12 @@ return [
         $controller = new RecipeController();
         $controller->show($slug);
     },
+    '/recipe/{slug}/edit' => function ($slug) {
+        $controller = new RecipeController();
+        $controller->edit($slug);
+    },
+    '/recipe/{slug}/update' => function ($slug) {
+        $controller = new RecipeController();
+        $controller->update($slug);
+    },
 ];

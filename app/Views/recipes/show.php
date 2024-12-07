@@ -23,7 +23,7 @@ ob_start(); ?>
                 <p><strong>Добавлен:</strong> <?php echo date('d.m.Y', strtotime($recipe['created_at'])); ?></p>
 
                 <div class="d-flex align-items-center flex-wrap gap-3 mt-5">
-                    <a href="#" class="btn-default">Редактировать</a>
+                    <a href="/recipe/<?php echo htmlspecialchars($recipe['slug']); ?>/edit" class="btn-default">Редактировать</a>
                     <button type="button" class="btn-default" data-bs-toggle="modal" data-bs-target="#deleteModal">
                         Удалить
                     </button>

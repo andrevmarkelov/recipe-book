@@ -4,7 +4,13 @@ namespace app\Helpers;
 
 class Validation
 {
-    public static function validateRecipe($data, $files): array
+    /**
+     * @param $data
+     * @param $files
+     * @param string $context
+     * @return array
+     */
+    public static function validateRecipe($data, $files, string $context = 'create'): array
     {
         $errors = [];
 
@@ -14,9 +20,9 @@ class Validation
             $errors['title'] = 'Название должно содержать от 3 до 255 символов.';
         }
 
-        if (empty($data['slug'])) {
+        if ($context === 'create' && empty($data['slug'])) {
             $errors['slug'] = 'Slug обязателен для заполнения.';
-        } else if (!preg_match('/^[a-z0-9-]+$/', $data['slug'])) {
+        } else if (!empty($data['slug']) && !preg_match('/^[a-z0-9-]+$/', $data['slug'])) {
             $errors['slug'] = 'Slug может содержать только буквы, цифры и дефисы.';
         }
 
@@ -32,18 +38,32 @@ class Validation
             $errors['instructions'] = 'Инструкция должна быть длиной не менее 10 символов.';
         }
 
-        if (empty($files['image']['name'])) {
-            $errors['image'] = 'Изображение обязательно для загрузки.';
-        } else {
-            $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
-            if (!in_array($files['image']['type'], $allowedTypes)) {
-                $errors['image'] = 'Изображение должно быть формата JPG, PNG или GIF.';
+        if ($context === 'create') {
+            if (empty($files['image']['name'])) {
+                $errors['image'] = 'Изображение обязательно для загрузки';
+            } else {
+                self::validateImage($files, $errors);
             }
-            if ($files['image']['size'] > 5 * 1024 * 1024) {
-                $errors['image'] = 'Размер изображения не должен превышать 5 МБ.';
-            }
+        } else if (!empty($files['image']['name'])) {
+            self::validateImage($files, $errors);
         }
 
         return $errors;
+    }
+
+    /**
+     * @param $files
+     * @param $errors
+     * @return void
+     */
+    private static function validateImage($files, &$errors): void
+    {
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        if (!in_array($files['image']['type'], $allowedTypes)) {
+            $errors['image'] = 'Изображение должно быть формата JPG, PNG или GIF.';
+        }
+        if ($files['image']['size'] > 5 * 1024 * 1024) {
+            $errors['image'] = 'Размер изображения не должен превышать 5 МБ.';
+        }
     }
 }
