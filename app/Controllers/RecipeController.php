@@ -47,6 +47,11 @@ class RecipeController
 
         $errors = Validation::validateRecipe($_POST, $_FILES);
 
+        $slug = $_POST['slug'];
+        if (Recipe::findBySlug($slug)) {
+            $errors['slug'] = 'Slug должен быть уникальным';
+        }
+
         if (!empty($errors)) {
             echo json_encode(['status' => 'error', 'errors' => $errors]);
             exit;
@@ -65,7 +70,6 @@ class RecipeController
             }
         }
 
-        $slug = $_POST['slug'];
         $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
         $fileName = $slug . '.' . $extension;
         $filePath = $uploadDir . $fileName;
