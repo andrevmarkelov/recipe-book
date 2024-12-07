@@ -5,6 +5,8 @@ namespace app\Helpers;
 class Validation
 {
     /**
+     * Валидируем данные рецепта и возвращаем массив ошибок
+     *
      * @param $data
      * @param $files
      * @param string $context
@@ -52,6 +54,8 @@ class Validation
     }
 
     /**
+     * Проверяем корректность изображения по типу и размеру
+     *
      * @param $files
      * @param $errors
      * @return void

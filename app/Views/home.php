@@ -18,20 +18,23 @@ ob_start(); ?>
 
     <div class="row justify-content-end">
         <div class="col-md-4 col-lg-3">
-            <div class="recipe-list__action">
-                <form class="d-flex justify-content-between align-items-center gap-3">
-                    <div class="mb-3 w-100">
-                        <label for="recipeSearch" class="form-label">Поиск</label>
-                        <input type="text" class="form-control" id="recipeSearch" placeholder="Поиск рецептов">
-                    </div>
-
-                    <div>А</div>
-                </form>
+            <div class="d-flex gap-3 recipe-list__action">
+                <div class="mb-3">
+                    <label for="recipeSearch" class="form-label">Поиск <span class="text-muted small">(от 3х символов)</span></label>
+                    <input type="text" class="form-control" id="recipeSearch" minlength="3" placeholder="Введите название рецепта">
+                </div>
+                <div class="mb-3">
+                    <label for="recipeSort" class="form-label">Сортировка</label>
+                    <select id="recipeSort" class="form-select">
+                        <option value="asc">А-Я</option>
+                        <option value="desc">Я-А</option>
+                    </select>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
+    <div id="recipesContainer" class="row">
         <?php if (!empty($recipes)): ?>
             <?php foreach ($recipes as $recipe): ?>
                 <div class="col-sm-6 col-lg-4 col-xl-3 mb-4">

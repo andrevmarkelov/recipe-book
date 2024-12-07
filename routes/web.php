@@ -33,4 +33,8 @@ return [
         $controller = new RecipeController();
         $controller->delete($slug);
     },
+    '/recipes' => function () {
+        $controller = new RecipeController();
+        $controller->filter();
+    },
 ];
