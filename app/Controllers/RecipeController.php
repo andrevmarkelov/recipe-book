@@ -97,4 +97,73 @@ class RecipeController
 
         include __DIR__ . '/../Views/recipes/show.php';
     }
+
+    /**
+     * @param string $slug
+     * @return void
+     */
+    public function edit(string $slug): void
+    {
+        $recipe = Recipe::findBySlug($slug);
+
+        if (!$recipe) {
+            http_response_code(404);
+            include __DIR__ . '/../Views/errors/404.php';
+            return;
+        }
+
+        include __DIR__ . '/../Views/recipes/edit.php';
+    }
+
+    /**
+     * @param string $slug
+     * @return void
+     */
+    public function update(string $slug): void
+    {
+        $recipe = Recipe::findBySlug($slug);
+
+        if (!$recipe) {
+            header('HTTP/1.1 404 Not Found');
+            echo json_encode(['status' => 'error', 'message' => 'Рецепт не найден.']);
+            return;
+        }
+
+        $errors = Validation::validateRecipe($_POST, $_FILES, 'update');
+        if (!empty($errors)) {
+            header('HTTP/1.1 422 Unprocessable Entity');
+            echo json_encode(['status' => 'error', 'errors' => $errors]);
+            return;
+        }
+
+        $imagePath = $recipe['image_path'];
+        if (!empty($_FILES['image']['name'])) {
+            $uploadDir = __DIR__ . '/../../public/assets/images/recipe-images/';
+            $extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+            $fileName = $slug . '.' . $extension;
+            $filePath = $uploadDir . $fileName;
+
+            $oldImagePath = $uploadDir . $recipe['image_path'];
+            if (file_exists($oldImagePath)) {
+                unlink($oldImagePath);
+            }
+
+            if (!move_uploaded_file($_FILES['image']['tmp_name'], $filePath)) {
+                header('HTTP/1.1 500 Internal Server Error');
+                echo json_encode(['status' => 'error', 'message' => 'Ошибка загрузки изображения.']);
+                return;
+            }
+
+            $imagePath = $fileName;
+        }
+
+        $updated = Recipe::update($slug, $_POST['title'], $_POST['ingredients'], $_POST['instructions'], $imagePath);
+
+        if ($updated) {
+            echo json_encode(['status' => 'success', 'message' => 'Рецепт успешно обновлён']);
+        } else {
+            header('HTTP/1.1 500 Internal Server Error');
+            echo json_encode(['status' => 'error', 'message' => 'Не удалось обновить рецепт.']);
+        }
+    }
 }

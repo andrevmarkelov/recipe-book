@@ -61,6 +61,40 @@ class Recipe
         return $recipe ?: null;
     }
 
+    /**
+     * @param string $slug
+     * @param string $title
+     * @param string $ingredients
+     * @param string $instructions
+     * @param string|null $imagePath
+     * @return bool
+     */
+    public static function update(string $slug, string $title, string $ingredients, string $instructions, ?string $imagePath): bool
+    {
+        $db = self::getDB();
+        $query = 'UPDATE recipes SET title = :title, ingredients = :ingredients, instructions = :instructions';
+
+        if ($imagePath) {
+            $query .= ', image_path = :image_path';
+        }
+
+        $query .= ' WHERE slug = :slug';
+
+        $stmt = $db->prepare($query);
+        $params = [
+            ':title' => $title,
+            ':ingredients' => $ingredients,
+            ':instructions' => $instructions,
+            ':slug' => $slug,
+        ];
+
+        if ($imagePath) {
+            $params[':image_path'] = $imagePath;
+        }
+
+        return $stmt->execute($params);
+    }
+
 
     /**
      * Подключение к базе данных

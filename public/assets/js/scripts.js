@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     const createRecipeForm = document.getElementById('createRecipeForm');
+    const editRecipeForm = document.getElementById('editRecipeForm');
 
     if (createRecipeForm) {
         // Генерация слага для рецепта по заголовку
@@ -40,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
             document.querySelectorAll('.text-danger.small').forEach(el => el.remove());
 
             try {
-                const response = await fetch('/recipe/store', {
+                const response = await fetch(this.action, {
                     method: 'POST',
                     body: formData
                 });
@@ -48,29 +49,68 @@ document.addEventListener('DOMContentLoaded', function () {
                 const result = await response.json();
 
                 if (response.ok && result.message) {
-                    const successText = document.createElement('div');
-                    successText.className = 'alert alert-success text-center';
-                    successText.textContent = result.message;
-                    event.target.parentNode.prepend(successText);
-
-                    setTimeout(() => successText.remove(), 5000);
+                    displaySuccessMessage(result.message, event.target.parentNode);
                 } else if (result.errors) {
-                    for (const field in result.errors) {
-                        const fieldElement = document.getElementById(field);
-
-                        if (fieldElement) {
-                            fieldElement.classList.add('is-invalid');
-                            const errorText = document.createElement('div');
-                            errorText.className = 'text-danger small';
-                            errorText.textContent = result.errors[field];
-                            fieldElement.parentNode.appendChild(errorText);
-                        }
-                    }
+                    displayErrors(result.errors);
                 }
 
             } catch (error) {
                 console.error('Произошла ошибка при сохранении рецепта: ', error);
             }
         });
+    }
+
+    if (editRecipeForm) {
+        editRecipeForm.addEventListener('submit', async function (event) {
+           event.preventDefault();
+
+           const formData = new FormData(this);
+
+            document.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+            document.querySelectorAll('.text-danger.small').forEach(el => el.remove());
+
+           try {
+               const response = await fetch(this.action, {
+                  method: 'POST',
+                  body: formData
+               });
+
+               const result = await response.json();
+
+               if (response.ok) {
+                   displaySuccessMessage(result.message, event.target.parentNode);
+               } else if (result.errors) {
+                   displayErrors(result.errors);
+               }
+
+           } catch (error) {
+               console.error('Произошла ошибка при сохранении рецепта: ', error);
+           }
+        });
+    }
+
+    // Отображение ошибок
+    function displayErrors(errors) {
+        for (const field in errors) {
+            const fieldElement = document.getElementById(field);
+
+            if (fieldElement) {
+                fieldElement.classList.add('is-invalid');
+                const errorText = document.createElement('div');
+                errorText.className = 'text-danger small';
+                errorText.textContent = errors[field];
+                fieldElement.parentNode.appendChild(errorText);
+            }
+        }
+    }
+
+    // Отображение успешного сообщения
+    function displaySuccessMessage(message, targetElement) {
+        const successText = document.createElement('div');
+        successText.className = 'alert alert-success text-center';
+        successText.textContent = message;
+        targetElement.prepend(successText);
+
+        setTimeout(() => successText.remove(), 5000);
     }
 });
