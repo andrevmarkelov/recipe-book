@@ -32,7 +32,7 @@
 2. После создания папки можно клонировать проект с GitHub или скачать архив:
    - Для клонирования выполните команду:
      ```bash
-     git clone https://github.com/andrevmarkelov/recipe-book.git
+     git clone https://github.com/andrevmarkelov/recipe-book.git .
      ```
    - Чтобы скачать архив, нажмите **Code → Download ZIP** и распакуйте файлы в созданную папку.
 
